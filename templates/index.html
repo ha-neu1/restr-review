@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <!-- Webpage Title -->
+    <title>나만의 맛집</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <style>
+        html,body {
+            height: 100%;
+            width: 100%;
+            background-color: red;
+            background-image: url("https://ifh.cc/g/mDk3Z1.jpg");
+            background-size: cover;
+            background-position: center;
+
+        }
+
+        .section {
+            padding: 1rem 1.5rem;
+            margin: 50px;
+
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 6rem;
+        }
+
+        .is-sparta {
+            color: #e8344e !important;
+            width: 600px;
+
+        }
+
+        .button.is-sparta {
+            background-color: #e8344e;
+            border-color: transparent;
+            color: #fff !important;
+            width: 400px;
+            height: 50px;
+
+        }
+
+        .button.is-sparta.is-outlined {
+            background-color: transparent;
+            border-color: #e8344e;
+            color: #e8344e !important;
+
+
+        }
+
+        .help {
+            color: gray;
+
+        }
+        .container {
+            float: right;
+            display : inline-flex;
+            margin-top: -100px;
+            margin-right: 100px ;
+            padding: 175px;
+
+
+
+        }
+        .hero {
+            width: 500px;
+            height: 0px;
+        }
+
+
+
+
+    </style>
+    <script>
+        // {% if msg %}
+            //     alert("{{ msg }}")
+            // {% endif %}
+
+        function sign_in() {
+            let username = $("#input-username").val()
+            let password = $("#input-password").val()
+
+            if (username == "") {
+                $("#help-id-login").text("아이디를 입력해주세요.")
+                $("#input-username").focus()
+                return;
+            } else {
+                $("#help-id-login").text("")
+            }
+
+            if (password == "") {
+                $("#help-password-login").text("비밀번호를 입력해주세요.")
+                $("#input-password").focus()
+                return;
+            } else {
+                $("#help-password-login").text("")
+            }
+            $.ajax({
+                type: "POST",
+                url: "/sign_in",
+                data: {
+                    username_give: username,
+                    password_give: password
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token'], {path: '/'});
+                        window.location.replace("/")
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            });
+        }
+
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <section class="hero is-white">
+    <div class="hero-body has-text-centered" style="padding-bottom:1px;margin:auto;">
+        <h1 class="title is-sparta">나만의 맛집</h1>
+    </div>
+</section>
+<section class="section">
+    <div class="container">
+        <div class="box" style="max-width: 500px;margin:auto">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <div class="field has-addons">
+                            <div class="control has-icons-left" style="width:100%">
+                                <input id="input-username" class="input" type="text" placeholder="아이디">
+                                <span class="icon is-small is-left"><i class="fa fa-user"></i></span>
+                            </div>
+                            <div id="btn-check-dup" class="control is-hidden">
+                                <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                            </div>
+
+                        </div>
+                        <p id="help-id-login" class="help is-danger"></p>
+
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="input-password" class="input" type="password" placeholder="비밀번호">
+                                <span class="icon is-small is-left"><i class="fa fa-lock"></i></span>
+                            </div>
+                            <p>
+                        </div>
+
+
+                    </div>
+                    <div id="div-sign-in-or-up" class="has-text-centered">
+                        <nav class="level is-mobile">
+                            <button class="level-item button is-sparta" onclick="sign_in()">
+                                로그인
+                            </button>
+
+                        </nav>
+                        <hr>
+                        <h4 class="mb-3">아직 회원이 아니라면</h4>
+                        <nav class="level is-mobile">
+
+                            <button class="level-item button is-sparta is-outlined"
+                            >
+                                회원가입하기
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </article>
+</section>
+</div>
+</body>
+</html>
