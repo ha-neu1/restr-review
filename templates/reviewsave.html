@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <title>나만의 맛집 리뷰 등록하기</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            width: 100%;
+            height: 100%;
+
+            background-image: url("../static/image/bg.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrap {
+            width: 400px;
+            height: 550px;
+            max-width: 500px;
+            margin: 250px 5px 220px 12px;
+            padding: 15px;
+
+            background-color: white;
+
+
+            text-align: center;
+
+                }
+
+        .wrap > h1 {
+            margin: 5px 5px 20px 12px;
+            padding: 15px;
+            font-family: 'Black Han Sans', sans-serif;
+        }
+
+        .posting-box > button {
+            margin: 10px 10px 0px auto;
+        }
+    </style>
+
+    <script>
+      $(document).ready(function() {
+          bsCustomFileInput.init()
+          posting()
+      });
+
+      function posting() {
+          let title = $('#title').val()
+          let address = $('#address').val()
+          let comment = $("#comment").val()
+
+
+          let file = $('#file')[0].files[0]
+          let form_data = new FormData()
+
+          form_data.append("file_give", file)
+          form_data.append("title_give", title)
+          form_data.append("address_give", address)
+          form_data.append("comment_give", comment)
+
+          $.ajax({
+              type: "POST",
+              url: "/reviews/save",
+              data: form_data,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function (response) {
+                  alert(response["msg"])
+                  window.location.reload()
+              }
+          });
+      }
+    </script>
+
+</head>
+<body>
+<div>
+    <div class="wrap">
+            <h1>맛집 리뷰 등록</h1>
+        <div class="posting-box">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file">
+                        <label class="custom-file-label" for="file">사진 선택하기</label>
+                    </div>
+            <p></p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="title" placeholder="가게 이름">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="address" placeholder="주소">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="후기를 남겨주세요!" class="form-control" id="comment" rows="3"></textarea>
+                    </div>
+                    <button onclick="posting()" type="button" class="btn btn-dark">등록하기</button>
+                    <button type="button" class="btn btn-outline-dark">뒤로</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
