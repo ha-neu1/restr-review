@@ -60,5 +60,40 @@ def review_get():
     return jsonify({'reviews':review_list})
 
 
+# 포스팅 추가하기
+@app.route('/')
+def home():
+    return render_template('reviewsave.html')
+
+
+@app.route('/reviews/save', methods=['POST'])
+def save_review():
+    title_receive = request.form['title_give']
+    address_receive = request.form['address_give']
+    comment_receive = request.form['comment_give']
+
+    file = request.files["file_give"]
+
+    extension = file.filename.split('.')[-1]
+
+    today = datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+
+    filename = f'file-{mytime}'
+
+    save_to = f'static/{filename}.{extension}'
+    file.save(save_to)
+
+    doc = {
+        'title': title_receive,
+        'address': address_receive,
+        'comment': comment_receive,
+        'file': f'{filename}.{extension}'
+    }
+
+    db.reviews.insert_one(doc)
+
+    return jsonify({'msg': '등록 완료!'})
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
