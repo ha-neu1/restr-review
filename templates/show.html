@@ -6,13 +6,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
   <script>
     $(document).ready(function(){
-      show_review()
+      show_comment()
     });
-    function show_review(){
-      let file = $('#file').val()
-      let title = $('#title').val()
-      let address = $('#address').val()
-      let comment = $('#comment').val()
 
       $.ajax({
         type: 'POST',
@@ -56,7 +51,7 @@
   </script>
   <style>
     body{
-      background: fixed url("../static/image/background.jpg");
+      background: fixed url("../static/background.jpg");
       background-size: cover;
     }
     .top-container{
