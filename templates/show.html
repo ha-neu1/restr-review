@@ -26,7 +26,7 @@
                 data: {},
                 success: function (response) {
                   $('#reviews').empty()
-                    let rows = response['writes']
+                    let rows = response['msg']
                     for (let i=0;i<rows.length;i++){
                         let file = rows[i]['file']
                         let title = rows[i]['title']
