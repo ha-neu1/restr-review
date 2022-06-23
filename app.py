@@ -52,12 +52,12 @@ def sign_in():
 
 
 @app.route('/signup')
-def login():
+def signup():
     return render_template('login.html')
 
 
 @app.route('/sign_in', methods=['POST'])
-def sign_in():
+def signin():
     # 로그인
     return jsonify({'result': 'success'})
 
