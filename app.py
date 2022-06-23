@@ -152,8 +152,8 @@ def reviews_get():
     comment_receive = request.form['comment_give']
 
     doc = {
-        'image': image_receive,
-        'shop': shop_receive,
+        'file': file_receive,
+        'title': title_receive,
         'address' : address_receive,
         'comment': comment_receive
     }
