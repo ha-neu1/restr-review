@@ -130,8 +130,10 @@
                 }
             });
         }
-
-
+        
+        function to_sign(){
+                window.location.href="/signup"
+            }
     </script>
 </head>
 <body>
@@ -180,8 +182,7 @@
                         <h4 class="mb-3">아직 회원이 아니라면</h4>
                         <nav class="level is-mobile">
 
-                            <button class="level-item button is-sparta is-outlined"
-                            >
+                            <button class="level-item button is-sparta is-outlined"  onclick="to_sign()" >
                                 회원가입하기
                             </button>
                         </nav>
