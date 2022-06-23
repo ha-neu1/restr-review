@@ -53,6 +53,7 @@ def sign_in():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+
 @app.route('/signup')
 def signup():
     return render_template('login.html')
@@ -72,11 +73,12 @@ def sign_up():
     email_receive = request.form['email_give']
     area_receive = request.form['area_give']
 
+
     doc = {
-        "id": id_receive,  # 아이디
-        "password": password_hash,  # 비밀번호
-        "email": email_receive,  # 프로필 이름 기본값은 아이디
-        "area": area_receive  # 프로필 사진 파일 이름
+        "id": id_receive,                               # 아이디
+        "password": password_hash,                                  # 비밀번호
+        "email": email_receive,                           # 프로필 이름 기본값은 아이디
+        "area": area_receive                                        # 프로필 사진 파일 이름
 
     }
     db.users.insert_one(doc)
@@ -90,23 +92,43 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-
-@app.route('/login')
-def login():
-    return render_template("login.html")
-    
-@app.route('/reviewsave')
-def reviewsave():
-    return render_template('reviewsave.html')    
-
 @app.route('/show')
 def show():
     return render_template("show.html")
 
+
+
+
+@app.route('/reviewsave')
+def reviewsave():
+    return render_template('reviewsave.html')
+
+
+
+
+@app.route("/reviews", methods=["get"])
+def reviews_get():
+    file_receive = request.form['file_give']
+    title_receive = request.form['title_give']
+    address_receive = request.form['address_give']
+    comment_receive = request.form['comment_give']
+
+    doc = {
+        'file': file_receive,
+        'title': title_receive,
+        'address': address_receive,
+        'comment': comment_receive
+    }
+
+    db.reviews.insert_one(doc)
+
+    return jsonify({'msg': '등록 완료!'})
+
+
 @app.route("/reviews", methods=["GET"])
 def review_get():
     review_list = list(db.reviews.find({}, {'_id': False}))
-    return jsonify({'reviews':review_list})
+    return jsonify({'reviews': review_list})
 
 
 # 포스팅 추가하기
