@@ -52,15 +52,15 @@ def login():
     return render_template('login.html', msg=msg)
 
 
-@app.route('/user/<username>')
-def user(username):
+@app.route('/user/<id>')
+def user(id):
     # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+        status = (id == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
 
-        user_info = db.users.find_one({"username": username}, {"_id": False})
+        user_info = db.users.find_one({"id": id}, {"_id": False})
         return render_template('user.html', user_info=user_info, status=status)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
@@ -74,7 +74,7 @@ def sign_in():
 
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
-    username_receive = request.form['username_give']
+    id_receive = request.form['id_give']
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     email_receive = request.form['email_give']
@@ -82,7 +82,7 @@ def sign_up():
 
 
     doc = {
-        "username": username_receive,                               # 아이디
+        "id": id_receive,                               # 아이디
         "password": password_hash,                                  # 비밀번호
         "e-mail": email_receive,                           # 프로필 이름 기본값은 아이디
         "area": area_receive                                        # 프로필 사진 파일 이름
@@ -94,8 +94,8 @@ def sign_up():
 
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-    username_receive = request.form['username_give']
-    exists = bool(db.users.find_one({"username": username_receive}))
+    id_receive = request.form['id_give']
+    exists = bool(db.users.find_one({"id": id_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
 
