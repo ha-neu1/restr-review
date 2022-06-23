@@ -1,11 +1,17 @@
-from flask import Flask, render_template, request, jsonify
+from pymongo import MongoClient
+import jwt
+import datetime
+import hashlib
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
 app = Flask(__name__)
 
-from pymongo import MongoClient
+SECRET_KEY = 'SPARTA'
+
 client = MongoClient('mongodb+srv://test:sparta@cluster0.bitceih.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
-from datetime import datetime
 
 @app.route('/')
 def home():
