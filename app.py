@@ -137,12 +137,6 @@ def update_like():
 @app.route('/show')
 def show():
     return render_template("show.html")
-@app.route('/add')
-def add():
-    return render_template("add.html")
-@app.route('/register')
-def register():
-    return render_template("register.html")
 
 @app.route("/reviews", methods=["get"])
 def reviews_get():
