@@ -146,8 +146,8 @@ def register():
 
 @app.route("/reviews", methods=["get"])
 def reviews_get():
-    image_receive = request.form['image_give']
-    shop_receive = request.form['shop_give']
+    file_receive = request.form['file_give']
+    title_receive = request.form['title_give']
     address_receive = request.form['address_give']
     comment_receive = request.form['comment_give']
 
