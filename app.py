@@ -84,7 +84,7 @@ def sign_up():
     doc = {
         "id": id_receive,                               # 아이디
         "password": password_hash,                                  # 비밀번호
-        "e-mail": email_receive,                           # 프로필 이름 기본값은 아이디
+        "email": email_receive,                           # 프로필 이름 기본값은 아이디
         "area": area_receive                                        # 프로필 사진 파일 이름
 
     }
