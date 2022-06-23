@@ -137,7 +137,14 @@ def update_like():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+@app.route('/show')
+def show():
+    return render_template("show.html")
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+    
 @app.route('/reviewsave')
 def reviewsave():
     return render_template('reviewsave.html')    
