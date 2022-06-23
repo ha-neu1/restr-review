@@ -169,11 +169,6 @@ def review_get():
 
 
 # 포스팅 추가하기
-@app.route('/')
-def home():
-    return render_template('reviewsave.html')
-
-
 @app.route('/reviews/save', methods=['POST'])
 def save_review():
     title_receive = request.form['title_give']
