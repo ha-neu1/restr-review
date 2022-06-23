@@ -55,7 +55,7 @@ def home():
 @app.route('/signup')
 def login():
     msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template("login.html", msg=msg)
 
 
 @app.route('/user/<id>')
