@@ -103,24 +103,6 @@ def reviewsave():
 def show():
     return render_template("show.html")
 
-@app.route("/reviews", methods=["get"])
-def reviews_get():
-    file_receive = request.form['file_give']
-    title_receive = request.form['title_give']
-    address_receive = request.form['address_give']
-    comment_receive = request.form['comment_give']
-
-    doc = {
-        'file': file_receive,
-        'title': title_receive,
-        'address' : address_receive,
-        'comment': comment_receive
-    }
-
-    db.reviews.insert_one(doc)
-
-    return jsonify({'msg': '등록 완료!'})
-
 @app.route("/reviews", methods=["GET"])
 def review_get():
     review_list = list(db.reviews.find({}, {'_id': False}))
