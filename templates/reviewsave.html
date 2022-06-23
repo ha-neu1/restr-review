@@ -34,8 +34,8 @@
             width: 100%;
             height: 100%;
 
-            background-image: url("../static/image/bg.png");
-            background-repeat: no-repeat;
+            background-image: url("https://ifh.cc/g/mDk3Z1.jpg");
+            background-position:center;
             background-size: cover;
 
             display: flex;
@@ -48,7 +48,7 @@
             width: 400px;
             height: 550px;
             max-width: 500px;
-            margin: 250px 5px 215px 12px;
+            margin: 218px 0px 300px 2px;
             padding: 15px;
 
             background-color: white;
@@ -104,6 +104,10 @@
               }
           });
       }
+
+       function to_save(){
+                window.location.href="/show"
+            }
     </script>
 
 </head>
@@ -126,7 +130,7 @@
                     <div class="form-group">
                         <textarea placeholder="후기를 남겨주세요!" class="form-control" id="comment" rows="3"></textarea>
                     </div>
-                    <button onclick="posting()" type="button" class="btn" style="background-color: #8b4513; color: white">등록하기</button>
+                    <button onclick="to_save()" type="button" class="btn" style="background-color: #8b4513; color: white">등록하기</button>
         </div>
     </div>
 </div>
