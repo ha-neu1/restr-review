@@ -12,10 +12,23 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('mongodb+srv://test:sparta@cluster0.bitceih.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
-
 @app.route('/')
 def home():
-    return render_template('index.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('reviewsave.html')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+@app.route('/login')
+def login():
+    msg = request.args.get("msg")
+    return render_template('index.html', msg=msg)
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
@@ -37,19 +50,6 @@ def sign_in():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-    
-# 회원가입 하기
-@app.route('/')
-def home():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        return render_template('index.html')
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
 @app.route('/signup')
