@@ -9,15 +9,15 @@
       show_review()
     });
     function show_review(){
-      let image = $('#image').val()
-      let shop = $('#shop').val()
+      let file = $('#file').val()
+      let title = $('#title').val()
       let address = $('#address').val()
       let comment = $('#comment').val()
 
       $.ajax({
         type: 'POST',
         url: '/reviews',
-        data: {image_give:image, shop_give:shop, address_give:address, comment_give:comment},
+        data: {file_give:file, title_give:title, address_give:address, comment_give:comment},
         success: function (response) {
           alert(response['msg'])
           window.location.reload()
@@ -33,16 +33,16 @@
                   $('#reviews').empty()
                     let rows = response['writes']
                     for (let i=0;i<rows.length;i++){
-                        let image = rows[i]['image']
-                        let shop = rows[i]['shop']
+                        let file = rows[i]['file']
+                        let title = rows[i]['title']
                         let address = rows[i]['address']
                         let comment = rows[i]['comment']
 
                         let temp_html = `<div class="col">
                                           <div class="card">
-                                            <img src="${image}" class="card-img-top" alt="...">
+                                            <img src="${file}" class="card-img-top" alt="...">
                                             <div class="card-body">
-                                              <h5 class="card-title">${shop}</h5>
+                                              <h5 class="card-title">${title}</h5>
                                               <p class="card-text">${address}</p>
                                               <p class="card-text">${comment}</p>
                                             </div>
@@ -56,7 +56,7 @@
   </script>
   <style>
     body{
-      background: fixed url("/static/background.jpg");
+      background: fixed url("../static/background.jpg");
       background-size: cover;
     }
     .top-container{
@@ -120,36 +120,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">가게이름</h5>
-            <p class="card-text">주소</p>
-            <p class="card-text">후기후기</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">가게이름</h5>
-            <p class="card-text">주소</p>
-            <p class="card-text">후기후기</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">가게이름</h5>
-            <p class="card-text">주소</p>
-            <p class="card-text">후기후기</p>
-          </div>
-        </div>
-      </div>
+
     </div>
 
   </div>
