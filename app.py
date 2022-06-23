@@ -138,7 +138,9 @@ def update_like():
         return redirect(url_for("home"))
 
 
-    
+@app.route('/reviewsave')
+def reviewsave():
+    return render_template('reviewsave.html')    
 
 @app.route('/show')
 def show():
